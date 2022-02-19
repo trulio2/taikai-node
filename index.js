@@ -29,7 +29,6 @@ app.get('*', (request, response) => {
         <li>POST   /user => Create an User (Params: name, email)</li>
         <li>DELETE /user => Delete User by user email</li>
         <li>DELETE /user/id => Delete User by user id</li>
-
     </body>
   </html>`)
 })
