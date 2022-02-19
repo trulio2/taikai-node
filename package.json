@@ -1,0 +1,21 @@
+{
+  "name": "taikai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^3.9.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "joi": "^17.6.0"
+  },
+  "devDependencies": {
+    "prisma": "^3.9.2"
+  }
+}
