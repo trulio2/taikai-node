@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import Prisma from '@prisma/client'
 import Validade from '../library/validade.js'
+import Query from '../library/query.js'
 
 const prisma = new Prisma.PrismaClient()
 
@@ -10,12 +11,7 @@ const prisma = new Prisma.PrismaClient()
 const findCompany = async (request, response) => {
   try {
     const company = await prisma.company.findMany({
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        jobs: true,
-      },
+      select: Query.company,
     })
     return response.json(company)
   } catch (error) {

@@ -2,6 +2,7 @@ import Joi from 'joi'
 import Prisma from '@prisma/client'
 import EmailHandler from '../library/emailHandler.js'
 import Validade from '../library/validade.js'
+import Query from '../library/query.js'
 
 const prisma = new Prisma.PrismaClient()
 
@@ -10,7 +11,9 @@ const prisma = new Prisma.PrismaClient()
  */
 const findJobs = async (request, response) => {
   try {
-    const jobs = await prisma.job.findMany()
+    const jobs = await prisma.job.findMany({
+      select: Query.job,
+    })
     return response.json(jobs)
   } catch (error) {
     return response.json(error)
@@ -35,6 +38,7 @@ const findJobByKey = async (request, response) => {
     switch (request.params.key) {
       case 'title':
         jobs = await prisma.job.findMany({
+          select: Query.job,
           where: {
             title: {
               contains: request.params.search,
@@ -45,6 +49,7 @@ const findJobByKey = async (request, response) => {
         return response.json(jobs)
       case 'description':
         jobs = await prisma.job.findMany({
+          select: Query.job,
           where: {
             description: {
               contains: request.params.search,
@@ -55,6 +60,7 @@ const findJobByKey = async (request, response) => {
         return response.json(jobs)
       case 'skills':
         jobs = await prisma.job.findMany({
+          select: Query.job,
           where: {
             skills: {
               contains: request.params.search,
@@ -65,6 +71,7 @@ const findJobByKey = async (request, response) => {
         return response.json(jobs)
       case 'market':
         jobs = await prisma.job.findMany({
+          select: Query.job,
           where: {
             market: {
               contains: request.params.search,
@@ -75,6 +82,7 @@ const findJobByKey = async (request, response) => {
         return response.json(jobs)
       case 'type':
         jobs = await prisma.job.findMany({
+          select: Query.job,
           where: {
             type: {
               contains: request.params.search,
@@ -85,6 +93,7 @@ const findJobByKey = async (request, response) => {
         return response.json(jobs)
       case 'location':
         jobs = await prisma.job.findMany({
+          select: Query.job,
           where: {
             location: {
               contains: request.params.search,
@@ -94,18 +103,13 @@ const findJobByKey = async (request, response) => {
         })
         return response.json(jobs)
       case 'company':
-        let company = await prisma.company.findMany({
+        jobs = await prisma.company.findMany({
+          select: Query.company,
           where: {
             title: {
               contains: request.params.search,
               mode: 'insensitive',
             },
-          },
-        })
-        company = company.map((a) => a.id)
-        jobs = await prisma.job.findMany({
-          where: {
-            companyId: { in: company },
           },
         })
         return response.json(jobs)
@@ -125,6 +129,7 @@ const findJobByKey = async (request, response) => {
 const findJobAny = async (request, response) => {
   try {
     let jobs = await prisma.job.findMany({
+      select: Query.job,
       where: {
         OR: [
           {
@@ -177,6 +182,7 @@ const findJobAny = async (request, response) => {
     })
     company = company.map((a) => a.id)
     const result = await prisma.job.findMany({
+      select: Query.job,
       where: {
         companyId: { in: company },
       },
