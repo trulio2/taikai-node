@@ -22,7 +22,7 @@ location, skills and technologies required and jobs from a company name
 - DELETE /user => Delete User by user email
 - DELETE /user/id => Delete User by user id
 
-## Stach
+## Stack
 
 - NodeJs
 - ExpressJs
