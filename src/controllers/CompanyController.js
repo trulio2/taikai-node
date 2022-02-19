@@ -9,7 +9,14 @@ const prisma = new Prisma.PrismaClient()
  */
 const findCompany = async (request, response) => {
   try {
-    const company = await prisma.company.findMany()
+    const company = await prisma.company.findMany({
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        jobs: true,
+      },
+    })
     return response.json(company)
   } catch (error) {
     return response.json(error)

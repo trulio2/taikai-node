@@ -12,14 +12,16 @@ model User {
   name  String
   email String @unique
 
+  @@map(name: "user")
 }
 
 model Company {
   id          Int     @id @default(autoincrement())
   title       String  @unique
   description String?
-  Jobs        Job[]
+  jobs        Job[]
 
+  @@map(name: "company")
 }
 
 model Job {
@@ -30,8 +32,10 @@ model Job {
   market      String
   type        String
   location    String
-  date        DateTime @default(now())
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  Company     Company  @relation(fields: [companyId], references: [id])
+  companyId   Int
 
-  Company   Company @relation(fields: [companyId], references: [id])
-  companyId Int
+  @@map(name: "job")
 }
